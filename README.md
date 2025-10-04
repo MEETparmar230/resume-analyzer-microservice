@@ -125,6 +125,6 @@ docker run -p 8000:8000 --env-file .env resume-analyzer-microservice
 
 Meet Parmar
 
-Portfolio: [Portfolio](my-portfolio-site-theta-five.vercel.app/)
+Portfolio: [Portfolio Site](https://my-portfolio-site-theta-five.vercel.app/)
 
 Email: [meetparmar2362004@gmail.com]
