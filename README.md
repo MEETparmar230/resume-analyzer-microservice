@@ -127,4 +127,4 @@ Meet Parmar
 
 Portfolio: [Portfolio Site](https://my-portfolio-site-theta-five.vercel.app/)
 
-Email: [meetparmar2362004@gmail.com]
+Email: meetparmar2362004@gmail.com
