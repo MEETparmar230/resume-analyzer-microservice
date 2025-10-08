@@ -1,4 +1,3 @@
-from app.db import supabase
 
 from app.db import supabase
 
