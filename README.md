@@ -1,5 +1,5 @@
 
-# Resume Analyzer Microservice
+# 🧠 Resume Analyzer Microservice
 
 A **FastAPI-based microservice** that extracts skills from resumes and matches them with job requirements using NLP. This service can be integrated with any frontend or backend application to provide skill-matching insights in real-time.
 
@@ -71,8 +71,9 @@ Analyze a resume and match with a job role or custom description.
 
 Request Body:
 ```bash
+send form data
 {
-  "resume_text": "John Doe is a MERN stack developer skilled in React, Node.js, MongoDB, and Express.",
+  "file": "resume.pdf",
   "job_role": "mern_developer",
   "job_description": "Optional custom job description"
 }
@@ -81,12 +82,32 @@ Request Body:
 Response:
 ```bash
 {
-  "resume_skills": ["React", "Node.js", "MongoDB", "Express"],
-  "job_skills": ["React", "Node.js", "MongoDB", "Express", "Redux", "JWT"],
-  "matched_skills": ["React", "Node.js", "MongoDB", "Express"],
-  "missing_skills": ["Redux", "JWT"],
-  "match_score": 66.67
-}
+    "resume_text": "Meet Parmar  MERN Stack Developer\nmeetparmar2362004@gmail.com\nKadi, Gujarat\ngithub.com/MEETparmar230\n9662487198\nlinkedin.com/in/mitkumar-parmar-b23b20279\nProfile\nEnthusiastic and detail-oriented MERN Stack Developer with hands-on experience building frontend and full-\nstack applications. Skilled in developing responsive web interfaces using React and Tailwind CSS, and backend \nAPIs with Node.js and MongoDB. Eager to contribute to dynamic development teams and grow in a collaborative \nenvironment.\nEducation\n2021 – 2025\nLinch, Mehsana\nBachelor of Engineering  in Computer Science                CGPA=7.88\nSaffrony Institute of Technology(GTU)\nSkills\nLanguages\nJavaScript\nHTML\nCSS\nSQL\nTools & Platforms\nGit\nGitHub\nPostman\nFrameworks & Libraries:\nNext.js\nReact.js\nNode.js\nExpress.js\nTailwind CSS\nDa",
+    "job_role": "mern_developer",
+    "job_description": "react, node , mongodb ,javascript",
+    "skills_match": {
+        "resume_skills": [
+            "node",
+            "mongodb",
+            "react",
+            "javascript"
+        ],
+        "job_skills": [
+            "react",
+            "node",
+            "mongodb",
+            "javascript"
+        ],
+        "matched_skills": [
+            "javascript",
+            "react",
+            "mongodb",
+            "node"
+        ],
+        "missing_skills": [],
+        "match_score": 100.0
+    }
+
 ```
 
 ### GET /
@@ -103,7 +124,7 @@ Basic health check:
 
 # 1. Build Docker image
 ```bash
-docker build -t resume-analyzer-microservice.
+docker build -t resume-analyzer-microservice .
 ```
 
 # 2. Run Docker container
