@@ -122,12 +122,12 @@ Basic health check:
 
 ## Docker Deployment
 
-# 1. Build Docker image
+### 1. Build Docker image
 ```bash
 docker build -t resume-analyzer-microservice .
 ```
 
-# 2. Run Docker container
+### 2. Run Docker container
 ```bash
 docker run -p 8000:8000 --env-file .env resume-analyzer-microservice
 ```
