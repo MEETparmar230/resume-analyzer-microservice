@@ -1,40 +1,73 @@
-import spacy
 import re
 
-# Load NLP model
-nlp = spacy.load("en_core_web_sm")
+def extract_skills(text: str, known_skills=None):
+    """
+    Extracts likely technical skills from text by matching known keywords
+    or scanning for tech-like patterns.
+    """
+    if not text:
+        return []
 
-def extract_skills(text: str, skills_list: list = None):
-    """
-    Extract skills from text.
-    - If skills_list is provided, match against it.
-    - If skills_list is empty or None, try to extract skills from text using comma separation.
-    """
-    if skills_list:
-        # Match against given skills list
-        found_skills = []
-        for skill in skills_list:
-            pattern = re.compile(rf"\b{skill}\b", re.IGNORECASE)
-            if pattern.search(text):
-                found_skills.append(skill)
-        return list(set(found_skills))
+    text = text.lower()
+
+    # If known skills provided, match against them (fuzzy match)
+    extracted = set()
+    if known_skills:
+        for skill in known_skills:
+            skill_lower = skill.lower()
+            # Loose matching: allows React == React.js
+            pattern = re.escape(skill_lower).replace(r"\.", r".?")
+            if re.search(rf"\b{pattern}\b", text):
+                extracted.add(skill)
     else:
-        # Extract potential skills from free-text (comma-separated)
-        text = re.sub(r"(Required skills:|Skills:)", "", text, flags=re.IGNORECASE)
-        skills = [s.strip() for s in text.split(",") if s.strip()]
-        return skills
+        # Generic tech keyword list if no known skills
+        possible_skills = [
+            "python", "java", "javascript", "react", "react.js", "next.js",
+            "node", "node.js", "express", "express.js", "mongodb", "mysql",
+            "html", "css", "tailwind", "git", "github", "rest api", "sql",
+            "docker", "aws"
+        ]
+        for skill in possible_skills:
+            pattern = re.escape(skill).replace(r"\.", r".?")
+            if re.search(rf"\b{pattern}\b", text):
+                extracted.add(skill)
+
+    return sorted(extracted)
+
+
+# ✅ New logic starts here
+def normalize_skill(skill: str):
+    """Normalize skill names for fair comparison."""
+    return re.sub(r'[\s\.\-\_]+', '', skill.lower())
+
 
 def match_score(resume_skills, job_skills):
-    """Compare resume skills with job skills list."""
-    matched = list(set(resume_skills) & set(job_skills))
-    missing = list(set(job_skills) - set(resume_skills))
-    
-    score = (len(matched) / len(job_skills)) * 100 if job_skills else 0
-    
+    """
+    Compare resume skills with job-required skills and compute match percentage.
+    """
+    # Normalize both lists
+    resume_norm = [normalize_skill(s) for s in resume_skills]
+    job_norm = [normalize_skill(s) for s in job_skills]
+
+    matched = []
+    missing = []
+
+    # Compare each job skill against normalized resume skills
+    for jskill, jnorm in zip(job_skills, job_norm):
+        if any(
+            abs(len(r) - len(jnorm)) <= 3 and (jnorm in r or r in jnorm)
+            for r in resume_norm
+        ):
+            matched.append(jskill)
+        else:
+            missing.append(jskill)
+
+    score = round(len(matched) / len(job_skills) * 100, 2) if job_skills else 0
+
     return {
-        "resume_skills": resume_skills,
-        "job_skills": job_skills,
-        "matched_skills": matched,
-        "missing_skills": missing,
-        "match_score": round(score, 2)
+        "resume_skills": sorted(resume_skills),
+        "job_skills": sorted(job_skills),
+        "matched_skills": sorted(matched),
+        "missing_skills": sorted(missing),
+        "match_score": score
     }
