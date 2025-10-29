@@ -5,6 +5,11 @@ A **FastAPI-based microservice** that extracts skills from resumes and matches t
 
 ---
 
+## 🌐 Deployment
+- **Vercel:** [https://mith010-resume-analyzer-fastapi.hf.space/](https://mith010-resume-analyzer-fastapi.hf.space/)
+
+---
+
 ## Features
 
 - Extracts skills from resumes (PDF or text input)
@@ -135,7 +140,6 @@ docker run -p 8000:8000 --env-file .env resume-analyzer-microservice
 
 ## Future Plans
 
-- Add PDF parsing directly within the service
 - Integrate ML-based skill extraction for better accuracy
 - Scale as a microservice for multiple frontend apps
 - CI/CD automation for seamless deployments
