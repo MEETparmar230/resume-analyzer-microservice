@@ -34,7 +34,7 @@ A **FastAPI-based microservice** that extracts skills from resumes and matches t
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/resume-analyzer-microservice.git
+git clone https://github.com/MEETparmar230/resume-analyzer-microservice.git
 cd resume-analyzer-microservice
 ```
 ### 2. Create a virtual environment
