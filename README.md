@@ -25,7 +25,7 @@ A **FastAPI-based microservice** that extracts skills from resumes and matches t
 - **NLP:** spaCy
 - **Database:** PostgreSQL (Supabase)
 - **Containerization:** Docker
-- **Deployment:** AWS (EC2)
+- **Deployment:** HugginFace
 
 ---
 
